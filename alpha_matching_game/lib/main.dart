@@ -1,6 +1,7 @@
 import 'package:alpha_matching_game/core/constants/app_constants.dart';
 import 'package:alpha_matching_game/locator.dart';
 import 'package:alpha_matching_game/store/app/language/viewmodel/language_store.dart';
+import 'package:flutter/services.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:alpha_matching_game/utils/locale/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -22,6 +23,8 @@ class AlphaMatchingGame extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+
     return Sizer(builder: (context, orientation, deviceType) {
       return GetMaterialApp(
         localizationsDelegates: const [
