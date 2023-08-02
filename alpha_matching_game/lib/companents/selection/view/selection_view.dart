@@ -22,7 +22,7 @@ class _SelectionViewState extends State<SelectionView> {
       padding: EdgeInsets.all(2.h),
       decoration: const BoxDecoration(
           gradient: LinearGradient(colors: [Colors.red, Colors.purple])),
-      child: Center(child: SelectionCardArea()),
+      child: const Center(child: SelectionCardArea()),
     );
   }
 }

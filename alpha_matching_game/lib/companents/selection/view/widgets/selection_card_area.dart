@@ -26,6 +26,7 @@ class _SelectionCardAreaState extends State<SelectionCardArea>
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
+        shrinkWrap: true,
         itemCount: 4,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
