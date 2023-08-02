@@ -1,8 +1,9 @@
-import 'package:alpha_matching_game/companents/home/view/widgets/back_card.dart';
 import 'package:alpha_matching_game/companents/home/view/widgets/front_card.dart';
+import 'package:alpha_matching_game/companents/home/view/widgets/back_card.dart';
 import 'package:alpha_matching_game/companents/home/viewmodel/home_viewmodel.dart';
 import 'package:alpha_matching_game/core/constants/app_image.dart';
 import 'package:alpha_matching_game/locator.dart';
+import 'package:alpha_matching_game/store/app/game/viewmodel/game_store.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 
@@ -16,6 +17,7 @@ class GameCardArea extends StatefulWidget {
 class _GameCardAreaState extends State<GameCardArea>
     with SingleTickerProviderStateMixin {
   final homeViewModel = locator<HomeViewModel>();
+  final gameStore = locator<GameStore>();
   late AnimationController _controller;
   late Animation<Alignment> _topAlignmentAnimation;
   late Animation<Alignment> _bottomAlignmentAnimation;
@@ -27,9 +29,15 @@ class _GameCardAreaState extends State<GameCardArea>
   }
 
   @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return GridView.builder(
-        itemCount: AppImage.easyPokemonImageList.length,
+        itemCount: AppImage.pokemonEasyLevelImageList.length,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
             childAspectRatio: 3 / 2,
@@ -41,14 +49,16 @@ class _GameCardAreaState extends State<GameCardArea>
             onFlip: () {
               homeViewModel.toogleCard(index);
             },
-            front: backCard(
-              index,
-              _controller,
-              _topAlignmentAnimation,
-              _bottomAlignmentAnimation,
-            ),
-            back: frontCard(
-                _controller, _topAlignmentAnimation, _bottomAlignmentAnimation),
+            front: FrontCard(
+                gameImage: gameStore.pokemon.easyLevelImageList[index],
+                controller: _controller,
+                topAlignmentAnimation: _topAlignmentAnimation,
+                bottomAlignmentAnimation: _bottomAlignmentAnimation),
+            back: BackCard(
+                gameLogo: gameStore.pokemon.gameLogo,
+                controller: _controller,
+                topAlignmentAnimation: _topAlignmentAnimation,
+                bottomAlignmentAnimation: _bottomAlignmentAnimation),
           );
         });
   }
